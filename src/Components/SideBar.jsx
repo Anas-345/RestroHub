@@ -1,11 +1,13 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 import { SideBarContext } from "../Context/Contexts";
 
-export default function SideBar({ setPage }) { 
+export default function SideBar() { 
+  const navigation = useNavigate()
   const {sidebarOpen, setSidebarOpen} = useContext(SideBarContext)
 
-  function handleClick(text) {
-    setPage(text);
+  function handleClick(path) {
+    navigation(path)
     setSidebarOpen(false); 
   }
 
@@ -51,19 +53,19 @@ export default function SideBar({ setPage }) {
             Main
           </p>
           <button
-            onClick={() => handleClick('Dashboard')}
+            onClick={() => handleClick('/')}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Dashboard
           </button>
           <button
-            onClick={() => handleClick('Orders')}
+            onClick={() => handleClick('/orders')}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Orders
           </button>
           <button
-            onClick={() => handleClick('Menu')}
+            onClick={() => handleClick('/menu')}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Menu

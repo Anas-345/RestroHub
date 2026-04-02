@@ -3,11 +3,13 @@ import Button from "./Menu/Button";
 import Dish from "./Menu/Dish";
 import { MenuContext, SideBarContext } from "../Context/Contexts";
 import axios from "axios";
+import AddDish from "./Menu/AddDish";
 
 export default function Menu() {
+  const [type, setType] = useState("Best-Foods");
+  const [showForm, setShowForm] = useState(false)
   const { setSidebarOpen } = useContext(SideBarContext);
   const { menu, setMenu } = useContext(MenuContext);
-  const [type, setType] = useState("best-foods");
   const API = "https://free-food-menus-api-two.vercel.app/";
 
   const types = [
@@ -35,7 +37,6 @@ export default function Menu() {
           return { ...item, status: "Available", totalOrders: 0 };
         }),
       );
-      console.log(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +48,7 @@ export default function Menu() {
 
   return (
     <div className="flex-1 min-h-screen p-4 sm:p-6 md:p-8 bg-[#0f0e0c]">
-      <div className="flex items-start justify-between mb-8 gap-3">
+      <div className="flex items-center justify-between mb-8 gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={() => setSidebarOpen(true)}
@@ -57,6 +58,7 @@ export default function Menu() {
             <span className="block w-5 h-0.5 bg-current rounded" />
             <span className="block w-5 h-0.5 bg-current rounded" />
           </button>
+
           <div className="min-w-0">
             <h1
               className="text-[#f0ebe3] text-2xl sm:text-[28px] font-bold tracking-tight"
@@ -70,11 +72,14 @@ export default function Menu() {
           </div>
         </div>
 
-        <div className="shrink-0 flex items-center gap-2 bg-[#1a1814] border border-[#2e2a24] rounded-lg px-4 py-2">
-          <span className="w-2 h-2 rounded-full bg-[#e8a045] inline-block" />
-          <span className="text-[#7a7268] text-xs font-medium uppercase tracking-widest">
-            {menu.length} Dishes
-          </span>
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="hidden sm:flex shrink-0 items-center gap-2 bg-[#1a1814] border border-[#2e2a24] rounded-lg px-3 py-2">
+            <span className="w-2 h-2 rounded-full bg-[#e8a045] inline-block" />
+            <span className="text-[#7a7268] text-xs font-medium uppercase tracking-widest">
+              {menu.length} Dishes
+            </span>
+          </div>
+          <AddDish showForm={showForm} setShowForm={setShowForm} />
         </div>
       </div>
 
@@ -89,6 +94,7 @@ export default function Menu() {
           {menu.map((dish, i) => (
             <Dish
               key={dish.id}
+              id={dish.id}
               name={dish.name}
               price={dish.price}
               totalOrders={dish.totalOrders}
