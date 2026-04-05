@@ -2,27 +2,27 @@ import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { SideBarContext } from "../Context/Contexts";
 
-export default function SideBar() { 
-  const navigation = useNavigate()
-  const {sidebarOpen, setSidebarOpen} = useContext(SideBarContext)
+export default function SideBar() {
+  const navigation = useNavigate();
+  const { sidebarOpen, setSidebarOpen } = useContext(SideBarContext);
 
   function handleClick(path) {
-    navigation(path)
-    setSidebarOpen(false); 
+    navigation(path);
+    setSidebarOpen(false);
   }
 
   return (
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          className="fixed inset-0 bg-black/60 z-20 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       <div
         className={`
-          fixed top-0 left-0 z-50 h-screen
+          fixed top-0 left-0 z-30 h-screen
           w-64 bg-[#1a1814] border-r border-[#2e2a24] flex flex-col py-7 shrink-0
           transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
@@ -53,19 +53,19 @@ export default function SideBar() {
             Main
           </p>
           <button
-            onClick={() => handleClick('/')}
+            onClick={() => handleClick("/")}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Dashboard
           </button>
           <button
-            onClick={() => handleClick('/orders')}
+            onClick={() => handleClick("/orders")}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Orders
           </button>
           <button
-            onClick={() => handleClick('/menu')}
+            onClick={() => handleClick("/menu")}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Menu

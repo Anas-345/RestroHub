@@ -1,5 +1,6 @@
 export default function DishButton({ content, handleClick }) {
   const variant = {
+    Edit: "text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5",
     Delete:
       "text-[#7a7268] hover:text-[#e05555] hover:border-[#e05555]/40 hover:bg-[#e05555]/5",
     Enable:
@@ -12,6 +13,7 @@ export default function DishButton({ content, handleClick }) {
     Delete: "🗑",
     Enable: "✓",
     Disable: "⊘",
+    Edit: "✏️",
   };
 
   return (

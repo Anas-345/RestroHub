@@ -1,0 +1,41 @@
+export const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const types = [
+  "Best-Foods",
+  "BBQs",
+  "Breads",
+  "Burgers",
+  "Chocolates",
+  "Desserts",
+  "Drinks",
+  "Fried-Chicken",
+  "Ice-Cream",
+  "Pizzas",
+  "Sandwitches",
+  "Steaks",
+  "Sausages",
+  "Porks",
+  "Custom-Dishes",
+];

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import Dashboard from "../Dashboard";
 import Order from "../Order";
-import Menu from "../Menu";
+import Menu from "../Menu/Menu";
 import MenuContextProvider from "../../Context/MenuContextProvider";
 
 export default function PageRouter() {
