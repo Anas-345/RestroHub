@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import DishButton from "./DishButton";
-import { MenuContext } from "../../Context/Contexts";
 import { toast } from "react-toastify";
-import default_image from "../../assets/default_image.svg";
+import { MenuContext } from "@/Context/Contexts";
+import default_image from '@/assets/default_image.svg'
 
 export default function Dish({
   id,

@@ -5,7 +5,7 @@ import { days, months } from "../data/data";
 export default function Dashboard() {
   const { setSidebarOpen } = useContext(SideBarContext);
   const today = new Date();
- 
+
   return (
     <div className="flex-1 min-h-screen p-4 sm:p-6 md:p-8 bg-[#0f0e0c]">
       <div className="flex items-start justify-between mb-8 gap-3">

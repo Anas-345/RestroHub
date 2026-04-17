@@ -38,8 +38,9 @@ export default function SideBar() {
 
         <div className="px-6 pb-8 border-b border-[#2e2a24]">
           <div
-            className="text-[#e8a045] text-[22px] font-black"
+            className="text-[#e8a045] text-[22px] font-black cursor-pointer"
             style={{ fontFamily: "'Playfair Display', serif" }}
+            onClick={() => handleClick('/')}
           >
             🍛 RestroHub
           </div>
@@ -53,7 +54,7 @@ export default function SideBar() {
             Main
           </p>
           <button
-            onClick={() => handleClick("/")}
+            onClick={() => handleClick("/dashboard")}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Dashboard

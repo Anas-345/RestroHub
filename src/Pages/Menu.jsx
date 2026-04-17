@@ -1,16 +1,20 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import Button from "./Button";
-import Dish from "./Dish";
-import { MenuContext, SideBarContext } from "../../Context/Contexts";
 import axios from "axios";
-import { types } from "../../data/data";
-import FormModal from "./FormModal";
+import { MenuContext, SideBarContext } from "@/Context/Contexts";
+import { types } from "@/data/data";
+import Dish from "@/Components/Menu/Dish";
+import Button from "@/Components/Menu/Button";
+import FormModal from "@/Components/Menu/FormModal";
 
 export default function Menu() {
   const [type, setType] = useState("Best-Foods");
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [customDishes, setCustomDishes] = useState(localStorage.getItem('customDishes')? JSON.parse(localStorage.getItem('customDishes')): []);
+  const [customDishes, setCustomDishes] = useState(
+    localStorage.getItem("customDishes")
+      ? JSON.parse(localStorage.getItem("customDishes"))
+      : [],
+  );
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -70,7 +74,7 @@ export default function Menu() {
     type === "Custom-Dishes"
       ? setMenu(customDishes)
       : API_Call(type.toLowerCase());
-    localStorage.setItem('customDishes', JSON.stringify(customDishes))
+    localStorage.setItem("customDishes", JSON.stringify(customDishes));
   }, [type, customDishes]);
 
   return (
@@ -91,14 +95,14 @@ export default function Menu() {
               showForm={showEditForm}
               setShowForm={setShowEditForm}
               id={editId}
-              content={'Update'}
+              content={"Update"}
             />
           ) : (
             <FormModal
               setCustomDishes={setCustomDishes}
               showForm={showAddForm}
               setShowForm={setShowAddForm}
-              content={'Add'}
+              content={"Add"}
             />
           )}
           <div className="min-w-0">

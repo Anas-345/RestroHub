@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { MenuContext } from "../../Context/Contexts";
-import TextField from "./TextField";
+import { MenuContext } from "@/Context/Contexts";
 import NumberField from "./NumberField";
+import InputField from "../shared/InputField";
 
 export default function FormModal({
   setCustomDishes,
@@ -63,13 +63,8 @@ export default function FormModal({
           ? 10000
           : priceVal;
     const img = imgRef.current.value.trim();
-    const rate = (rateVal === null)
-      ? null
-      : rateVal < 0
-        ? 1
-        : rateVal > 5
-          ? 5
-          : rateVal;
+    const rate =
+      rateVal === null ? null : rateVal < 0 ? 1 : rateVal > 5 ? 5 : rateVal;
     if (!name || !dsc || !img || !price) {
       toast.error("Please add all details of dishes");
       return;
@@ -86,8 +81,8 @@ export default function FormModal({
             rate,
           ),
         );
-        setPrice('')
-        setRate('')
+    setPrice("");
+    setRate("");
     setShowForm(false);
     toast.success(`Dish ${content}ed Successfully`);
   }
@@ -154,19 +149,21 @@ export default function FormModal({
             </div>
 
             <div className="flex flex-col gap-3">
-              <TextField
+              <InputField
                 currentRef={nameRef}
                 handleEnter={handleEnter}
-                nextRef={descRef}
+                param={descRef}
                 content={"Name"}
                 placeholder={"Dish Name"}
+                type={"text"}
               />
-              <TextField
+              <InputField
                 currentRef={descRef}
                 handleEnter={handleEnter}
-                nextRef={priceRef}
+                param={priceRef}
                 content={"Description"}
                 placeholder={"Short description"}
+                type={"text"}
               />
               <NumberField
                 currentRef={priceRef}
@@ -188,11 +185,12 @@ export default function FormModal({
                 value={rate}
                 setValue={setRate}
               />
-              <TextField
+              <InputField
                 currentRef={imgRef}
                 handleEnter={handleClick}
                 content={"Image URL"}
                 placeholder={"Paste image URL"}
+                type={"text"}
               />
             </div>
 
