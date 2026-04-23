@@ -7,11 +7,12 @@ export default function AuthContextProvider({ children }) {
       ? JSON.parse(localStorage.getItem("users"))
       : [],
   );
+  const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => localStorage.setItem("users", JSON.stringify(auth)), [auth]);
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, isLogin, setIsLogin }}>
       {children}
     </AuthContext.Provider>
   );

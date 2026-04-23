@@ -8,7 +8,7 @@ export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth, setAuth, setIsLogin } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -17,9 +17,14 @@ export default function Login() {
   }
 
   function handleLogin(path) {
-    const email = emailRef.current.value;
+    const email = emailRef.current.value.trim();
     const password = passwordRef.current.value;
     const findUser = auth.find((user) => user.email === email);
+
+    if (!email || !password) {
+      toast.error("Please fill the form");
+      return;
+    }
     if (!findUser) {
       toast.error("User doesn't exist");
       return;
@@ -33,8 +38,10 @@ export default function Login() {
         user.email === findUser.email ? { ...user, active: true } : user,
       ),
     );
+    setIsLogin(true)
     navigate(path);
   }
+  
   return (
     <>
       <div className="mb-2">

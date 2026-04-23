@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import DishButton from "./DishButton";
+import Buttons from "../shared/Buttons";
 import { toast } from "react-toastify";
 import { MenuContext } from "@/Context/Contexts";
 import default_image from '@/assets/default_image.svg'
@@ -142,9 +142,9 @@ export default function Dish({
           </div>
         </div>
         <div className="flex gap-2 px-4 pb-4">
-          <DishButton content={dishAvailability} handleClick={handleStatus} />
-          <DishButton content="Edit" handleClick={handleEdit} />
-          <DishButton content="Delete" handleClick={handleDelete} />
+          <Buttons content={dishAvailability} handleClick={handleStatus} />
+          <Buttons content="Edit" handleClick={handleEdit} />
+          <Buttons content="Delete" handleClick={handleDelete} />
         </div>
       </div>
     </>
