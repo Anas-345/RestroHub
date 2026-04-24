@@ -1,12 +1,17 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { SideBarContext } from "../Context/Contexts";
+import { AuthContext, SideBarContext } from "../Context/Contexts";
+import { toast } from "react-toastify";
 
 export default function SideBar() {
   const navigation = useNavigate();
   const { sidebarOpen, setSidebarOpen } = useContext(SideBarContext);
+  const { isLogin } = useContext(AuthContext);
 
   function handleClick(path) {
+    if (!isLogin && path !== "/") {
+      return toast.error("Please Login to access other pages");
+    }
     navigation(path);
     setSidebarOpen(false);
   }
@@ -40,7 +45,7 @@ export default function SideBar() {
           <div
             className="text-[#e8a045] text-[22px] font-black cursor-pointer"
             style={{ fontFamily: "'Playfair Display', serif" }}
-            onClick={() => handleClick('/')}
+            onClick={() => handleClick("/")}
           >
             🍛 RestroHub
           </div>

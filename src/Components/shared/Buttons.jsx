@@ -15,6 +15,8 @@ export default function Buttons({
       "bg-[#e8a045] hover:bg-[#f0aa55] text-[#0f0e0c] text-gray-200 px-4 py-3",
     Login:
       "border-[#2e2a24] hover:border-[#e8a045]/40 hover:text-[#f0ebe3] text-[#7a7268] px-4 py-3 ",
+    Counter:
+      "bg-[#e8a045]/10 hover:bg-[#e8a045]/20 text-[#e8a045] border-[#e8a045]/30 hover:border-[#e8a045]/60 text-base font-bold px-3 py-1 flex-none w-9 h-9",
   };
 
   const icon = {

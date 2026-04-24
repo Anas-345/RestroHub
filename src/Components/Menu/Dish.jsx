@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Buttons from "../shared/Buttons";
 import { toast } from "react-toastify";
-import { MenuContext } from "@/Context/Contexts";
-import default_image from '@/assets/default_image.svg'
+import { AuthContext, MenuContext } from "@/Context/Contexts";
+import default_image from "@/assets/default_image.svg";
 
 export default function Dish({
   id,
@@ -18,8 +18,11 @@ export default function Dish({
   customDishes,
   setCustomDishes,
   setShowEditForm,
-  setEditId
+  setEditId,
+  userRole,
 }) {
+  const [orderState, setOrderState] = useState(false);
+  const [quantity, setQuantity] = useState(0);
 
   const { menu, setMenu } = useContext(MenuContext);
 
@@ -59,9 +62,29 @@ export default function Dish({
   }
 
   function handleEdit() {
-    setEditId(id)
+    setEditId(id);
     setShowEditForm(true);
   }
+
+  function handleOrder() {
+    console.log("Dish added to order");
+    setQuantity(1);
+    setOrderState(true);
+  }
+
+  function handleAdd() {
+    setQuantity((prev) => prev + 1);
+  }
+
+  function handleSubtract() {
+    setQuantity((prev) => prev - 1);
+  }
+
+  useEffect(() => {
+    if (quantity === 0) {
+      setOrderState(false);
+    }
+  }, [quantity]);
 
   return (
     <>
@@ -142,9 +165,38 @@ export default function Dish({
           </div>
         </div>
         <div className="flex gap-2 px-4 pb-4">
-          <Buttons content={dishAvailability} handleClick={handleStatus} />
-          <Buttons content="Edit" handleClick={handleEdit} />
-          <Buttons content="Delete" handleClick={handleDelete} />
+          {userRole === "owner" ? (
+            <>
+              <Buttons content={dishAvailability} handleClick={handleStatus} />
+              <Buttons content="Edit" handleClick={handleEdit} />
+              <Buttons content="Delete" handleClick={handleDelete} />
+            </>
+          ) : orderState ? (
+            <div className="flex items-center gap-2 w-full">
+              <Buttons
+                content="-"
+                selectVariant="Counter"
+                handleClick={handleSubtract}
+              />
+              <span
+                className="flex-1 text-center text-[#f0ebe3] font-bold text-sm bg-[#1a1814] border border-[#2e2a24] rounded-lg py-2"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                {quantity}
+              </span>
+              <Buttons
+                content="+"
+                selectVariant="Counter"
+                handleClick={handleAdd}
+              />
+            </div>
+          ) : (
+            <Buttons
+              content="Add to Order"
+              handleClick={handleOrder}
+              selectVariant={"Default"}
+            />
+          )}
         </div>
       </div>
     </>

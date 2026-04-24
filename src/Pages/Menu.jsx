@@ -1,12 +1,13 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { MenuContext, SideBarContext } from "@/Context/Contexts";
+import { AuthContext, MenuContext, SideBarContext } from "@/Context/Contexts";
 import { types } from "@/data/data";
 import Dish from "@/Components/Menu/Dish";
 import Button from "@/Components/Menu/Button";
 import FormModal from "@/Components/Menu/FormModal";
 
 export default function Menu() {
+  const [loading, setLoading] = useState(true);
   const [type, setType] = useState("Best-Foods");
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -21,12 +22,16 @@ export default function Menu() {
 
   const { setSidebarOpen } = useContext(SideBarContext);
   const { menu, setMenu } = useContext(MenuContext);
+  const { auth } = useContext(AuthContext);
+
+  const userRole = auth.find((user) => user.active).role;
 
   const scrollRef = useRef(null);
 
   const API = "https://free-food-menus-api-two.vercel.app/";
 
   async function API_Call(endpoint) {
+    setLoading(true);
     try {
       let data = await axios.get(API + endpoint);
       setMenu(
@@ -36,6 +41,8 @@ export default function Menu() {
       );
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -125,12 +132,14 @@ export default function Menu() {
               {menu.length} Dishes
             </span>
           </div>
-          <button
-            className="bg-[#e8a045] hover:bg-[#f0aa55] active:scale-95 text-[#0f0e0c] text-sm font-bold px-3 sm:px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 whitespace-nowrap"
-            onClick={handleClick}
-          >
-            + Add Dish
-          </button>
+          {userRole === "owner" && (
+            <button
+              className="bg-[#e8a045] hover:bg-[#f0aa55] active:scale-95 text-[#0f0e0c] text-sm font-bold px-3 sm:px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 whitespace-nowrap"
+              onClick={handleClick}
+            >
+              + Add Dish
+            </button>
+          )}
         </div>
       </div>
 
@@ -188,24 +197,46 @@ export default function Menu() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 sm:p-6">
-          {menu.map((dish, i) => (
-            <Dish
-              key={dish.id}
-              id={dish.id}
-              name={dish.name}
-              price={dish.price}
-              totalOrders={dish.totalOrders}
-              status={dish.status}
-              image={dish.img}
-              description={dish.dsc}
-              rate={dish.rate}
-              index={i}
-              customDishes={customDishes}
-              setCustomDishes={setCustomDishes}
-              setShowEditForm={setShowEditForm}
-              setEditId={setEditId}
-            />
-          ))}
+          {menu.length === 0 && !loading && (
+            <div className="col-span-full flex flex-col items-center justify-center py-20 gap-3">
+              <>
+                <span className="text-5xl opacity-30">🍽️</span>
+                <p className="text-[#f0ebe3] font-semibold text-base">
+                  No dishes found
+                </p>
+                <p className="text-[#7a7268] text-sm">
+                  Try a different category{" "}
+                  {userRole === "owner" && <span>or add a new dish</span>}
+                </p>
+              </>
+            </div>
+          )}
+          {loading ? (
+            <div className="col-span-full flex flex-col items-center justify-center py-20 gap-3">
+              <div className="size-10 rounded-full border-2 border-[#2e2a24] border-t-[#e8a045] animate-spin" />
+              <p className="text-[#7a7268] text-sm">Loading dishes...</p>
+            </div>
+          ) : (
+            menu.map((dish, i) => (
+              <Dish
+                key={dish.id}
+                id={dish.id}
+                name={dish.name}
+                price={dish.price}
+                totalOrders={dish.totalOrders}
+                status={dish.status}
+                image={dish.img}
+                description={dish.dsc}
+                rate={dish.rate}
+                index={i}
+                customDishes={customDishes}
+                setCustomDishes={setCustomDishes}
+                setShowEditForm={setShowEditForm}
+                setEditId={setEditId}
+                userRole={userRole}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
