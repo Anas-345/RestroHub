@@ -5,7 +5,6 @@ import NumberField from "./NumberField";
 import InputField from "../shared/InputField";
 
 export default function FormModal({
-  setCustomDishes,
   showForm,
   setShowForm,
   id = null,
@@ -14,7 +13,7 @@ export default function FormModal({
   const [price, setPrice] = useState("");
   const [rate, setRate] = useState("");
 
-  const { menu } = useContext(MenuContext);
+  const { menu, setCustomDishes } = useContext(MenuContext);
 
   const nameRef = useRef();
   const descRef = useRef();

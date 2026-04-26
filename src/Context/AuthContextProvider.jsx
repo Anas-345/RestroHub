@@ -7,7 +7,7 @@ export default function AuthContextProvider({ children }) {
       ? JSON.parse(localStorage.getItem("users"))
       : [],
   );
-  const [isLogin, setIsLogin] = useState([])
+  const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => localStorage.setItem("users", JSON.stringify(auth)), [auth]);
 
