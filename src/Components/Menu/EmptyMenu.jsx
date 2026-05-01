@@ -1,8 +1,8 @@
-import { MenuContext } from "@/Context/Contexts";
+import { AuthContext } from "@/Context/Contexts";
 import { useContext } from "react";
 
 export default function EmaptyMenu() {
-    const {userRole} = useContext(MenuContext)
+    const {userRole} = useContext(AuthContext)
   return (
     <div className="col-span-full flex flex-col items-center justify-center py-20 gap-3">
       <>

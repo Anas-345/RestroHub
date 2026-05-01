@@ -8,10 +8,9 @@ import {
   handleStatus,
   handleSubtract,
 } from "../../Functions/DishFunctions";
-import { MenuContext, OrderContext } from "@/Context/Contexts";
+import { AuthContext, MenuContext, OrderContext } from "@/Context/Contexts";
 
 export default function DishButtons({
-  userRole,
   dishAvailability,
   id,
   status,
@@ -29,6 +28,7 @@ export default function DishButtons({
   const { menu, setMenu, customDishes, setCustomDishes } =
     useContext(MenuContext);
   const { setOrder } = useContext(OrderContext);
+  const { userRole } = useContext(AuthContext);
 
   const check =
     customDishes.length === menu.length

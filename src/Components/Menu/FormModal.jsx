@@ -45,6 +45,7 @@ export default function FormModal({
         rate,
         status: "Available",
         totalOrders: 0,
+        quantity: 0,
       },
     ];
   }

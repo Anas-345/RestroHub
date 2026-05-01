@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { MenuContext, OrderContext } from "@/Context/Contexts";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext, OrderContext } from "@/Context/Contexts";
 import DishImage from "../Dish/DishImage";
 import DishInfo from "../Dish/DishInfo";
 import DishButtons from "../Dish/DishButtons";
@@ -22,15 +22,19 @@ export default function Dish({
   const [quantity, setQuantity] = useState(0);
 
   const { order, setOrder } = useContext(OrderContext);
-  const { userRole, userEmail } = useContext(MenuContext);
+  const { userEmail } = useContext(AuthContext);
+
+  const isMounted = useRef(false);
 
   const dishAvailability = status === "Available" ? "Disable" : "Enable";
 
-  const existingOrder = order.find(
-    (userOrder) => userOrder.userEmail === userEmail && userOrder.status === "",
-  );
+  const existingOrder = order.find(userOrder => userOrder.userEmail === userEmail && userOrder.status === '')
 
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
     if (quantity === 0 && order.length) {
       setOrderState(false);
       if (existingOrder?.items.length === 1) {
@@ -62,6 +66,15 @@ export default function Dish({
       ),
     );
   }, [quantity]);
+
+  useEffect(() => {
+    if (!existingOrder?.items) return;
+    const existingItem = existingOrder.items.find((item) => item.id === id);
+    if (existingItem) {
+      setQuantity(existingItem.quantity);
+      setOrderState(true);
+    }
+  }, []);
   return (
     <>
       <div
@@ -80,7 +93,6 @@ export default function Dish({
           totalOrders={totalOrders}
         />
         <DishButtons
-          userRole={userRole}
           dishAvailability={dishAvailability}
           id={id}
           status={status}

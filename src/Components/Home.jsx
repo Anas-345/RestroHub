@@ -1,16 +1,15 @@
-import { AuthContext, SideBarContext } from "@/Context/Contexts";
+import { AuthContext } from "@/Context/Contexts";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import Buttons from "./shared/Buttons";
 import { toast } from "react-toastify";
+import HamburgerMenu from "./shared/HamburgerMenu";
 
 export default function Home() {
   const navigate = useNavigate();
 
-  const { setSidebarOpen } = useContext(SideBarContext);
-  const { isLogin, setIsLogin, setAuth, auth } = useContext(AuthContext);
+  const { isLogin, setIsLogin, setAuth, role } = useContext(AuthContext);
 
-  const role = auth.find((user) => user.active)?.role;
 
   const content = !isLogin
     ? {
@@ -71,14 +70,7 @@ export default function Home() {
   return (
     <>
       <div className="mt-6 ml-3">
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="flex flex-col gap-1.5 p-2 rounded-lg text-[#7a7268] hover:bg-[#1a1814] hover:text-[#f0ebe3] transition-all cursor-pointer shrink-0 md:hidden"
-        >
-          <span className="block w-5 h-0.5 bg-current rounded" />
-          <span className="block w-5 h-0.5 bg-current rounded" />
-          <span className="block w-5 h-0.5 bg-current rounded" />
-        </button>
+        <HamburgerMenu />
       </div>
       <div className="min-h-screen bg-[#0f0e0c] flex flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center text-center max-w-xl">

@@ -45,7 +45,7 @@ export function handleOrder(
   price,
   userEmail,
   setOrderState,
-  name
+  name,
 ) {
   setQuantity(1);
   if (existingOrder) {

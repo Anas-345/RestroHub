@@ -1,4 +1,4 @@
-import { MenuContext } from "@/Context/Contexts";
+import { AuthContext, MenuContext } from "@/Context/Contexts";
 import { useContext } from "react";
 import HamburgerMenu from "../shared/HamburgerMenu";
 import FormModal from "./FormModal";
@@ -11,7 +11,8 @@ export default function MenuHeader({
   setShowAddForm,
   handleClick,
 }) {
-  const { menu, userRole } = useContext(MenuContext);
+  const { menu } = useContext(MenuContext);
+  const {userRole} = useContext(AuthContext)
   return (
     <div className="flex items-center justify-between mb-8 gap-3">
       <div className="flex items-center gap-3 min-w-0">
