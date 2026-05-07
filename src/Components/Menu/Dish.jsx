@@ -21,35 +21,35 @@ export default function Dish({
   const [orderState, setOrderState] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
-  const { order, setOrder } = useContext(OrderContext);
+  const { order, setOrder, currentOrder } = useContext(OrderContext);
   const { userEmail } = useContext(AuthContext);
 
   const isMounted = useRef(false);
 
   const dishAvailability = status === "Available" ? "Disable" : "Enable";
 
-  const existingOrder = order.find(userOrder => userOrder.userEmail === userEmail && userOrder.status === '')
-
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
       return;
     }
-    if (quantity === 0 && order.length) {
+    if (quantity <= 0) {
       setOrderState(false);
-      if (existingOrder?.items.length === 1) {
+      if (currentOrder?.items.length === 1) {
         setOrder((prev) =>
           prev.filter(
-            (userOrder) => userOrder.userEmail !== existingOrder.userEmail,
+            (userOrder) => (userOrder.orderId !== currentOrder?.orderId ),
           ),
         );
         return;
       }
       setOrder((prev) =>
-        prev.map((userOrder) => ({
+        prev.map((userOrder) => (
+          userOrder.orderId === currentOrder?.orderId?
+          {
           ...userOrder,
           items: userOrder.items.filter((item) => item.id !== id),
-        })),
+        }: userOrder)),
       );
       return;
     }
@@ -68,8 +68,8 @@ export default function Dish({
   }, [quantity]);
 
   useEffect(() => {
-    if (!existingOrder?.items) return;
-    const existingItem = existingOrder.items.find((item) => item.id === id);
+    if (!currentOrder?.items) return;
+    const existingItem = currentOrder.items.find((item) => item.id === id);
     if (existingItem) {
       setQuantity(existingItem.quantity);
       setOrderState(true);
@@ -101,7 +101,6 @@ export default function Dish({
           orderState={orderState}
           quantity={quantity}
           setQuantity={setQuantity}
-          existingOrder={existingOrder}
           price={price}
           userEmail={userEmail}
           setOrderState={setOrderState}

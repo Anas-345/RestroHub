@@ -19,7 +19,6 @@ export default function DishButtons({
   orderState,
   quantity,
   setQuantity,
-  existingOrder,
   price,
   userEmail,
   setOrderState,
@@ -27,7 +26,7 @@ export default function DishButtons({
 }) {
   const { menu, setMenu, customDishes, setCustomDishes } =
     useContext(MenuContext);
-  const { setOrder } = useContext(OrderContext);
+  const { setOrder, currentOrder } = useContext(OrderContext);
   const { userRole } = useContext(AuthContext);
 
   const check =
@@ -81,7 +80,7 @@ export default function DishButtons({
           handleClick={() =>
             handleOrder(
               setQuantity,
-              existingOrder,
+              currentOrder,
               setOrder,
               id,
               price,

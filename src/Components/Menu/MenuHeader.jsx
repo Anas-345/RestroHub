@@ -2,6 +2,7 @@ import { AuthContext, MenuContext } from "@/Context/Contexts";
 import { useContext } from "react";
 import HamburgerMenu from "../shared/HamburgerMenu";
 import FormModal from "./FormModal";
+import Buttons from "../shared/Buttons";
 
 export default function MenuHeader({
   showEditForm,
@@ -54,12 +55,7 @@ export default function MenuHeader({
           </span>
         </div>
         {userRole === "owner" && (
-          <button
-            className="bg-[#e8a045] hover:bg-[#f0aa55] active:scale-95 text-[#0f0e0c] text-sm font-bold px-3 sm:px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 whitespace-nowrap"
-            onClick={handleClick}
-          >
-            + Add Dish
-          </button>
+          <Buttons content={"+ Add Dish"} handleClick={handleClick} selectVariant={"Default"}/>
         )}
       </div>
     </div>

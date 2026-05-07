@@ -114,6 +114,7 @@ export default function Home() {
                 <Buttons
                   content={"Login"}
                   handleClick={() => handleRoute("/auth/login")}
+                  selectVariant={"LightBtn"}
                 />
               </>
             )}

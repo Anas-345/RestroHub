@@ -87,5 +87,5 @@ export function handleAdd(setQuantity) {
 }
 
 export function handleSubtract(setQuantity) {
-  setQuantity((prev) => prev - 1);
+  setQuantity((prev) => Math.max(0, prev - 1));
 }

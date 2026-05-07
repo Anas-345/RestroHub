@@ -1,17 +1,31 @@
-import { AuthContext, OrderContext } from "@/Context/Contexts";
+import { OrderContext } from "@/Context/Contexts";
 import { useContext } from "react";
+import Buttons from "../shared/Buttons";
 
 export default function Modal({ showForm, setShowForm }) {
-  const { order } = useContext(OrderContext);
-  const { userEmail } = useContext(AuthContext);
+  const { currentOrder, setOrder } = useContext(OrderContext);
 
-  const currentOrder = order.find(
-    (userOrder) => userOrder.userEmail === userEmail && !userOrder.status,
-  );
   const totalAmount = currentOrder?.items.reduce(
     (total, item) => item.price * item.quantity + total,
     0,
   );
+
+  function handleOrderSubmit() {
+    setOrder((prev) =>
+      prev.map((singleOrder) =>
+        singleOrder.userEmail === currentOrder.userEmail && !singleOrder.status
+          ? {
+              ...singleOrder,
+              status: "Pending",
+              totalPrice: totalAmount,
+              placedAt: new Date().getTime(),
+            }
+          : singleOrder,
+      ),
+    );
+    setShowForm(false);
+  }
+
   return (
     <>
       <div
@@ -80,6 +94,34 @@ export default function Modal({ showForm, setShowForm }) {
                     Rs {totalAmount}
                   </p>
                 </div>
+                <div className="flex flex-col gap-1.5 mt-4">
+                  <label
+                    htmlFor="type"
+                    className="text-[#7a7268] text-[11px] uppercase tracking-[1.5px] font-medium"
+                  >
+                    Type
+                  </label>
+                  <select
+                    id="type"
+                    className="w-full bg-[#1a1814] border border-[#2e2a24] rounded-lg px-4 py-2.5 text-sm text-[#f0ebe3] outline-none focus:border-[#e8a045]/50 focus:bg-[#1e1c18] transition-all duration-200 cursor-pointer"
+                  >
+                    <option value="dine-in">Dine-in</option>
+                    <option value="takeaway">Takeaway</option>
+                    <option value="delivery">Delivery</option>
+                  </select>
+                </div>
+                <div className="flex gap-3 mt-6">
+                  <Buttons
+                    content={"Cancel"}
+                    handleClick={() => setShowForm(false)}
+                    selectVariant={"LightBtn"}
+                  />
+                  <Buttons
+                    content={"Place Order"}
+                    handleClick={handleOrderSubmit}
+                    selectVariant={"Default"}
+                  />
+                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8 gap-3">
@@ -92,23 +134,6 @@ export default function Modal({ showForm, setShowForm }) {
                 </p>
               </div>
             )}
-
-            <div className="flex flex-col gap-1.5 mt-4">
-              <label
-                htmlFor="type"
-                className="text-[#7a7268] text-[11px] uppercase tracking-[1.5px] font-medium"
-              >
-                Type
-              </label>
-              <select
-                id="type"
-                className="w-full bg-[#1a1814] border border-[#2e2a24] rounded-lg px-4 py-2.5 text-sm text-[#f0ebe3] outline-none focus:border-[#e8a045]/50 focus:bg-[#1e1c18] transition-all duration-200 cursor-pointer"
-              >
-                <option value="dine-in">Dine-in</option>
-                <option value="takeaway">Takeaway</option>
-                <option value="delivery">Delivery</option>
-              </select>
-            </div>
           </div>
         </div>
       </div>

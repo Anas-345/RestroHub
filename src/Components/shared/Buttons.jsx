@@ -4,19 +4,13 @@ export default function Buttons({
   selectVariant = content,
 }) {
   const variant = {
-    Edit: "text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5 bg-transparent text-xs",
-    Delete:
-      "text-[#7a7268] hover:text-[#e05555] hover:border-[#e05555]/40 hover:bg-[#e05555]/5 bg-transparent text-xs",
-    Enable:
-      "text-[#7a7268] hover:text-[#4caf82] hover:border-[#4caf82]/40 hover:bg-[#4caf82]/5 bg-transparent text-xs",
-    Disable:
-      "text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5",
-    Default:
-      "bg-[#e8a045] hover:bg-[#f0aa55] text-[#0f0e0c] text-gray-200 px-4 py-3",
-    Login:
-      "border-[#2e2a24] hover:border-[#e8a045]/40 hover:text-[#f0ebe3] text-[#7a7268] px-4 py-3 ",
-    Counter:
-      "bg-[#e8a045]/10 hover:bg-[#e8a045]/20 text-[#e8a045] border-[#e8a045]/30 hover:border-[#e8a045]/60 text-base font-bold px-3 py-1 flex-none w-9 h-9",
+    Edit: "text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5 bg-transparent text-xs font-semibold",
+    Delete: "text-[#7a7268] hover:text-[#e05555] hover:border-[#e05555]/40 hover:bg-[#e05555]/5 bg-transparent text-xs font-semibold",
+    Enable: "text-[#7a7268] hover:text-[#4caf82] hover:border-[#4caf82]/40 hover:bg-[#4caf82]/5 bg-transparent text-xs font-semibold",
+    Disable: "text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5 bg-transparent text-xs font-semibold",
+    Default: "bg-[#e8a045] hover:bg-[#f0aa55] text-[#0f0e0c] font-bold text-sm px-5",
+    LightBtn: "bg-transparent text-[#7a7268] hover:bg-[#2e2a24] hover:text-[#f0ebe3] border-[#2e2a24] font-semibold text-sm px-4",
+    Counter: "bg-[#e8a045]/10 hover:bg-[#e8a045]/20 text-[#e8a045] border-[#e8a045]/30 hover:border-[#e8a045]/60 text-base font-bold flex-none !w-9 !h-9 !py-0 !flex-none",
   };
 
   const icon = {
@@ -30,9 +24,9 @@ export default function Buttons({
     <button
       className={`
         flex items-center justify-center gap-1.5
-        flex-1 py-2 font-semibold rounded-lg
-        transition-all duration-200 active:scale-95
-        border border-[#2e2a24]  cursor-pointer
+        flex-1 py-2 rounded-lg font-semibold
+        border border-[#2e2a24]
+        transition-all duration-200 active:scale-95 cursor-pointer
         ${variant[selectVariant]}
       `}
       onClick={handleClick}

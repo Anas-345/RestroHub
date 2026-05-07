@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { MenuContext } from "@/Context/Contexts";
 import NumberField from "./NumberField";
 import InputField from "../shared/InputField";
+import Buttons from "../shared/Buttons";
 
 export default function FormModal({
   showForm,
@@ -195,18 +196,8 @@ export default function FormModal({
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button
-                onClick={exitForm}
-                className="flex-1 py-2.5 text-sm font-semibold rounded-lg border border-[#2e2a24] text-[#7a7268] hover:bg-[#2e2a24] hover:text-[#f0ebe3] transition-all duration-200 cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleClick}
-                className="flex-1 py-2.5 text-sm font-bold rounded-lg bg-[#e8a045] hover:bg-[#f0aa55] active:scale-95 text-[#0f0e0c] transition-all duration-200 cursor-pointer"
-              >
-                {content} Dish
-              </button>
+              <Buttons content={"Cancel"} handleClick={exitForm} selectVariant={"LightBtn"}/>
+             <Buttons content={content + "Dish"} handleClick={handleClick} selectVariant={"Default"}/>
             </div>
           </div>
         </div>
