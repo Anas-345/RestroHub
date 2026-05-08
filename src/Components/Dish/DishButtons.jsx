@@ -20,14 +20,14 @@ export default function DishButtons({
   quantity,
   setQuantity,
   price,
-  userEmail,
   setOrderState,
   name,
 }) {
   const { menu, setMenu, customDishes, setCustomDishes } =
     useContext(MenuContext);
   const { setOrder, currentOrder } = useContext(OrderContext);
-  const { userRole } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const {role, email, userName} = user
 
   const check =
     customDishes.length === menu.length
@@ -36,7 +36,7 @@ export default function DishButtons({
 
   return (
     <div className="flex gap-2 px-4 pb-4">
-      {userRole === "owner" ? (
+      {role === "owner" ? (
         <>
           <Buttons
             content={dishAvailability}
@@ -84,9 +84,10 @@ export default function DishButtons({
               setOrder,
               id,
               price,
-              userEmail,
+              email,
               setOrderState,
               name,
+              userName
             )
           }
           selectVariant={"Default"}

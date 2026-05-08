@@ -49,7 +49,7 @@ export default function Register() {
     setAuth((prev) => [
       ...prev,
       {
-        name,
+        userName: name,
         role,
         email,
         password,

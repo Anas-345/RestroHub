@@ -2,7 +2,10 @@ import { AuthContext } from "@/Context/Contexts";
 import { useContext } from "react";
 
 export default function EmaptyMenu() {
-    const {userRole} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+
+  const { role } = user;
+
   return (
     <div className="col-span-full flex flex-col items-center justify-center py-20 gap-3">
       <>
@@ -12,7 +15,7 @@ export default function EmaptyMenu() {
         </p>
         <p className="text-[#7a7268] text-sm">
           Try a different category{" "}
-          {userRole === "owner" && <span>or add a new dish</span>}
+          {role === "owner" && <span>or add a new dish</span>}
         </p>
       </>
     </div>

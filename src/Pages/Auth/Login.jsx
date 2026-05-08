@@ -35,7 +35,7 @@ export default function Login() {
     toast.success("You Logged In successfully");
     setAuth((prev) =>
       prev.map((user) =>
-        user.email === findUser.email ? { ...user, active: true } : user,
+        user.email === findUser.email ? { ...user, active: true } : {...user, active: false},
       ),
     );
     setIsLogin(true)

@@ -10,14 +10,11 @@ export default function AuthContextProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
   const user = auth.find((user) => user.active);
 
-  const userRole = user?.role;
-  const userEmail = user?.email;
-
   useEffect(() => localStorage.setItem("users", JSON.stringify(auth)), [auth]);
 
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, isLogin, setIsLogin, userRole, userEmail }}
+      value={{ auth, setAuth, isLogin, setIsLogin, user }}
     >
       {children}
     </AuthContext.Provider>

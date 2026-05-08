@@ -6,10 +6,11 @@ export default function OrderContextProvider({ children }) {
     const orders = JSON.parse(localStorage.getItem("orders"));
     return orders ? orders : [];
   });
-  const { userEmail } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const { email } = user || {};
 
   const currentOrder = order.find(
-    (userOrder) => userOrder.userEmail === userEmail && !userOrder.status,
+    (userOrder) => userOrder.userEmail === email && !userOrder.status,
   );
 
   useEffect(() => {

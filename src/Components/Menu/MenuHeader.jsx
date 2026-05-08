@@ -13,7 +13,10 @@ export default function MenuHeader({
   handleClick,
 }) {
   const { menu } = useContext(MenuContext);
-  const {userRole} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+
+  const { role } = user;
+
   return (
     <div className="flex items-center justify-between mb-8 gap-3">
       <div className="flex items-center gap-3 min-w-0">
@@ -40,7 +43,7 @@ export default function MenuHeader({
             Menu
           </h1>
           <p className="text-[#7a7268] text-sm mt-0.5 hidden sm:block">
-            {userRole === "owner"
+            {role === "owner"
               ? "Manage your dishes, prices and availability"
               : "Browse and order from our menu"}
           </p>
@@ -54,8 +57,12 @@ export default function MenuHeader({
             {menu.length} Dishes
           </span>
         </div>
-        {userRole === "owner" && (
-          <Buttons content={"+ Add Dish"} handleClick={handleClick} selectVariant={"Default"}/>
+        {role === "owner" && (
+          <Buttons
+            content={"+ Add Dish"}
+            handleClick={handleClick}
+            selectVariant={"Default"}
+          />
         )}
       </div>
     </div>

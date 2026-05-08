@@ -4,7 +4,7 @@ import Dish from "@/Components/Menu/Dish";
 import Button from "@/Components/Menu/Button";
 import MenuHeader from "@/Components/Menu/MenuHeader";
 import EmaptyMenu from "@/Components/Menu/EmptyMenu";
-import Loading from "@/Components/Menu/Loading";
+import Loading from "@/Components/shared/Loading";
 import { types } from "@/data/data";
 import ScrollLeft from "@/Components/Menu/ScrollLeft";
 import ScrollRight from "@/Components/Menu/ScrollRight";

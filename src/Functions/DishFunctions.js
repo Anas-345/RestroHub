@@ -39,19 +39,20 @@ export function handleStatus(check, setCustomDishes, setMenu, id, status) {
 
 export function handleOrder(
   setQuantity,
-  existingOrder,
+  currentOrder,
   setOrder,
   id,
   price,
-  userEmail,
+  email,
   setOrderState,
   name,
+  userName,
 ) {
   setQuantity(1);
-  if (existingOrder) {
+  if (currentOrder) {
     setOrder((prev) =>
       prev.map((userOrder) =>
-        userOrder.userEmail === existingOrder.userEmail
+        userOrder.userEmail === currentOrder.userEmail
           ? {
               ...userOrder,
               items: [...userOrder.items, { id, name, price, quantity: 1 }],
@@ -64,7 +65,8 @@ export function handleOrder(
       ...prev,
       {
         orderId: idGen(),
-        userEmail,
+        userEmail: email,
+        userName,
         placedAt: 0,
         status: "",
         items: [

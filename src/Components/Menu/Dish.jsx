@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext, OrderContext } from "@/Context/Contexts";
+import { OrderContext } from "@/Context/Contexts";
 import DishImage from "../Dish/DishImage";
 import DishInfo from "../Dish/DishInfo";
 import DishButtons from "../Dish/DishButtons";
@@ -21,8 +21,7 @@ export default function Dish({
   const [orderState, setOrderState] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
-  const { order, setOrder, currentOrder } = useContext(OrderContext);
-  const { userEmail } = useContext(AuthContext);
+  const { setOrder, currentOrder } = useContext(OrderContext);
 
   const isMounted = useRef(false);
 
@@ -55,7 +54,7 @@ export default function Dish({
     }
     setOrder((prev) =>
       prev.map((userOrder) =>
-        userOrder.userEmail === userEmail
+        userOrder.orderId === currentOrder?.orderId
           ? {
               ...userOrder,
               items: userOrder.items.map((item) =>
@@ -102,7 +101,6 @@ export default function Dish({
           quantity={quantity}
           setQuantity={setQuantity}
           price={price}
-          userEmail={userEmail}
           setOrderState={setOrderState}
           name={name}
         />

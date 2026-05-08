@@ -7,11 +7,13 @@ import Buttons from "@/Components/shared/Buttons";
 export function OrderHeader() {
   const [showForm, setShowForm] = useState(false);
 
-  const { userRole, userEmail } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { order } = useContext(OrderContext);
 
+  const { email, role } = user;
+
   const currentUserOrder = order.filter(
-    (userOrder) => userOrder.userEmail === userEmail,
+    (userOrder) => userOrder.userEmail === email,
   );
   return (
     <div className="flex items-center justify-between mb-8 gap-3">
@@ -26,7 +28,7 @@ export function OrderHeader() {
             Order
           </h1>
           <p className="text-[#7a7268] text-sm mt-0.5 hidden sm:block">
-            {userRole === "owner"
+            {role === "owner"
               ? "Track and manage all incoming orders"
               : "Track your orders and see your order history"}
           </p>
@@ -40,7 +42,7 @@ export function OrderHeader() {
             {currentUserOrder.length} Orders
           </span>
         </div>
-        {userRole === "customer" && (
+        {role === "customer" && (
           <Buttons
             content={"+ Place Order"}
             handleClick={() => setShowForm(true)}
