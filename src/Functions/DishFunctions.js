@@ -52,7 +52,7 @@ export function handleOrder(
   if (currentOrder) {
     setOrder((prev) =>
       prev.map((userOrder) =>
-        userOrder.userEmail === currentOrder.userEmail
+        userOrder.orderId === currentOrder.orderId
           ? {
               ...userOrder,
               items: [...userOrder.items, { id, name, price, quantity: 1 }],

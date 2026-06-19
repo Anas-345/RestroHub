@@ -11,7 +11,7 @@ export default function Order() {
   const displayOrders =
     role === "owner"
       ? order
-      : order.filter((userOrder) => userOrder.userEmail === email);
+      : order.filter((userOrder) => (userOrder.userEmail === email && userOrder.status));
 
     const gridCols = role === "owner"
   ? "grid-cols-[1fr_1.2fr_1fr_1fr_0.5fr] md:grid-cols-[1fr_1.2fr_2fr_1fr_1fr_1fr_0.5fr]"
@@ -50,7 +50,7 @@ export default function Order() {
           displayOrders.map((userOrder, i) => (
             <div
               key={userOrder.userEmail + i}
-              className={`grid ${gridCols} gap-4 px-6 py-4 border-b border-[#2e2a24] last:border-none hover:bg-[#e8a045]/[0.02] transition-colors items-center`}
+              className={`grid ${gridCols} gap-4 px-6 py-4 border-b border-[#2e2a24] last:border-none hover:bg-[#e8a045]/2 transition-colors items-center`}
             >
               <p className="text-[#e8a045] text-xs font-bold tracking-wide">#{String(i + 1).padStart(3, "0")}</p>
 

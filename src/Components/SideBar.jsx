@@ -1,19 +1,13 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { AuthContext, SideBarContext } from "../Context/Contexts";
-import { toast } from "react-toastify";
+import { SideBarContext } from "../Context/Contexts";
 
 export default function SideBar() {
-  const navigation = useNavigate();
   const { sidebarOpen, setSidebarOpen } = useContext(SideBarContext);
-  const { isLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   function handleClick(path) {
-    if (!isLogin && path !== "/") {
-      return toast.error("Please Login to access other pages");
-    }
-    navigation(path);
-    setSidebarOpen(false);
+    navigate(path);
   }
 
   return (
@@ -65,13 +59,13 @@ export default function SideBar() {
             Dashboard
           </button>
           <button
-            onClick={() => handleClick("/orders")}
+            onClick={() => handleClick("/dashboard/orders")}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Orders
           </button>
           <button
-            onClick={() => handleClick("/menu")}
+            onClick={() => handleClick("/dashboard/menu")}
             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[#7a7268] hover:bg-[#221f1a] hover:text-[#f0ebe3] active:scale-95 text-sm font-medium cursor-pointer transition-all duration-200 mb-0.5"
           >
             Menu

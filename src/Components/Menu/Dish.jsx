@@ -37,18 +37,20 @@ export default function Dish({
       if (currentOrder?.items.length === 1) {
         setOrder((prev) =>
           prev.filter(
-            (userOrder) => (userOrder.orderId !== currentOrder?.orderId ),
+            (userOrder) => userOrder.orderId !== currentOrder?.orderId,
           ),
         );
         return;
       }
       setOrder((prev) =>
-        prev.map((userOrder) => (
-          userOrder.orderId === currentOrder?.orderId?
-          {
-          ...userOrder,
-          items: userOrder.items.filter((item) => item.id !== id),
-        }: userOrder)),
+        prev.map((userOrder) =>
+          userOrder.orderId === currentOrder?.orderId
+            ? {
+                ...userOrder,
+                items: userOrder.items.filter((item) => item.id !== id),
+              }
+            : userOrder,
+        ),
       );
       return;
     }

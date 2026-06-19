@@ -6,14 +6,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      {
-        <div className="flex bg-[#0f0e0c] text-white min-h-screen">
-          <SideBar />
-          <div className="flex-1 min-w-0">
             <PageRouter />
-          </div>
-        </div>
-      }
     </>
   );
 }

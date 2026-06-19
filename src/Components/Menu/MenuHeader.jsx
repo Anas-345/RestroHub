@@ -25,7 +25,7 @@ export default function MenuHeader({
           <FormModal
             showForm={showEditForm}
             setShowForm={setShowEditForm}
-            id={editId}
+            id={editId} 
             content={"Update"}
           />
         ) : (

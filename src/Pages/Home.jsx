@@ -1,15 +1,13 @@
 import { AuthContext } from "@/Context/Contexts";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import Buttons from "./shared/Buttons";
+import Buttons from "../Components/shared/Buttons";
 import { toast } from "react-toastify";
-import HamburgerMenu from "./shared/HamburgerMenu";
 
 export default function Home() {
   const navigate = useNavigate();
 
   const { isLogin, setIsLogin, setAuth, role } = useContext(AuthContext);
-
 
   const content = !isLogin
     ? {
@@ -69,9 +67,6 @@ export default function Home() {
   }
   return (
     <>
-      <div className="mt-6 ml-3">
-        <HamburgerMenu />
-      </div>
       <div className="min-h-screen bg-[#0f0e0c] flex flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center text-center max-w-xl">
           <h1
@@ -99,11 +94,18 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             {isLogin ? (
-              <Buttons
-                content={"Logout"}
-                handleClick={() => handleLogout("/")}
-                selectVariant={"Default"}
-              />
+              <>
+                <Buttons
+                  content={"Logout"}
+                  handleClick={() => handleLogout("/")}
+                  selectVariant={"Logout"}
+                />
+                <Buttons
+                  content={"Dashboard"}
+                  handleClick={() => handleRoute("/dashboard/")}
+                  selectVariant={"Default"}
+                />
+              </>
             ) : (
               <>
                 <Buttons
