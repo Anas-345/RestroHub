@@ -8,6 +8,7 @@ export default function SideBar() {
 
   function handleClick(path) {
     navigate(path);
+    setSidebarOpen(false)
   }
 
   return (
@@ -30,7 +31,7 @@ export default function SideBar() {
       >
         <button
           onClick={() => setSidebarOpen(false)}
-          className="absolute top-4 right-4 text-[#7a7268] hover:text-[#f0ebe3] transition-colors md:hidden"
+          className="absolute top-4 right-4 text-[#7a7268] hover:text-[#f0ebe3] transition-colors md:hidden cursor-pointer p-4"
         >
           ✕
         </button>

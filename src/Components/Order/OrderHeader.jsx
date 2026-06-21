@@ -10,11 +10,12 @@ export function OrderHeader() {
   const { user } = useContext(AuthContext);
   const { order } = useContext(OrderContext);
 
-  const { email, role } = user;
+  const { role, uid } = user;
 
   const currentUserOrder = order.filter(
-    (userOrder) => userOrder.userEmail === email,
+    (userOrder) => userOrder.uid === uid,
   );
+
   return (
     <div className="flex items-center justify-between mb-8 gap-3">
       <div className="flex items-center gap-3 min-w-0">

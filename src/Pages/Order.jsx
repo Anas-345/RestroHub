@@ -6,12 +6,12 @@ export default function Order() {
   const { order } = useContext(OrderContext);
   const { user } = useContext(AuthContext);
 
-  const { role, email } = user;
+  const { role, uid } = user;
 
   const displayOrders =
     role === "owner"
       ? order
-      : order.filter((userOrder) => (userOrder.userEmail === email && userOrder.status));
+      : order.filter((userOrder) => (userOrder.uid === uid));
 
     const gridCols = role === "owner"
   ? "grid-cols-[1fr_1.2fr_1fr_1fr_0.5fr] md:grid-cols-[1fr_1.2fr_2fr_1fr_1fr_1fr_0.5fr]"
@@ -49,7 +49,7 @@ export default function Order() {
         ) : (
           displayOrders.map((userOrder, i) => (
             <div
-              key={userOrder.userEmail + i}
+              key={userOrder.uid + i}
               className={`grid ${gridCols} gap-4 px-6 py-4 border-b border-[#2e2a24] last:border-none hover:bg-[#e8a045]/2 transition-colors items-center`}
             >
               <p className="text-[#e8a045] text-xs font-bold tracking-wide">#{String(i + 1).padStart(3, "0")}</p>
@@ -57,9 +57,9 @@ export default function Order() {
               {role === "owner" && (
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-[#2e2a24] border border-[#3d3a37] flex items-center justify-center text-[#e8a045] text-xs font-bold shrink-0">
-                    {userOrder.userName?.[0]?.toUpperCase()}
+                    {userOrder.uid?.[0]?.toUpperCase()}
                   </div>
-                  <p className="text-[#f0ebe3] text-sm font-medium truncate">{userOrder.userName}</p>
+                  <p className="text-[#f0ebe3] text-sm font-medium truncate">{userOrder.uid}</p>
                 </div>
               )}
 

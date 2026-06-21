@@ -1,5 +1,13 @@
 import { toast } from "react-toastify";
 
+export function idGen() {
+  return (
+    Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)
+  );
+}
+
+// Owner
+
 function deletedish(prev, id) {
   return prev.filter((dish) => dish.id !== id);
 }
@@ -14,11 +22,6 @@ function statusChange(prev, id, status) {
       );
 }
 
-function idGen() {
-  return (
-    Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)
-  );
-}
 export function handleEdit(setEditId, id, setShowEditForm) {
   setEditId(id);
   setShowEditForm(true);
@@ -37,49 +40,36 @@ export function handleStatus(check, setCustomDishes, setMenu, id, status) {
     : setMenu((prev) => statusChange(prev, id, status));
 }
 
+// Customer
+
 export function handleOrder(
   setQuantity,
   currentOrder,
-  setOrder,
+  setCurrentOrder,
   id,
   price,
-  email,
   setOrderState,
   name,
-  userName,
 ) {
   setQuantity(1);
-  if (currentOrder) {
-    setOrder((prev) =>
-      prev.map((userOrder) =>
-        userOrder.orderId === currentOrder.orderId
-          ? {
-              ...userOrder,
-              items: [...userOrder.items, { id, name, price, quantity: 1 }],
-            }
-          : userOrder,
-      ),
-    );
-  } else {
-    setOrder((prev) => [
+  if (currentOrder?.items) {
+    setCurrentOrder((prev) => ({
       ...prev,
-      {
-        orderId: idGen(),
-        userEmail: email,
-        userName,
-        placedAt: 0,
-        status: "",
-        items: [
-          {
-            id,
-            name,
-            price,
-            quantity: 1,
-          },
-        ],
-        totalPrice: 0,
-      },
-    ]);
+      items: [...prev.items, { id, name, price, quantity: 1 }],
+    }));
+  } else {
+    setCurrentOrder((prev) => ({
+      ...prev,
+      orderId: idGen(),
+      items: [
+        {
+          id,
+          name,
+          price,
+          quantity: 1,
+        },
+      ],
+    }));
   }
   setOrderState(true);
 }
@@ -89,5 +79,5 @@ export function handleAdd(setQuantity) {
 }
 
 export function handleSubtract(setQuantity) {
-  setQuantity((prev) => Math.max(0, prev - 1));
+  setQuantity((prev) => prev - 1);
 }

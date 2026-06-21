@@ -25,9 +25,9 @@ export default function DishButtons({
 }) {
   const { menu, setMenu, customDishes, setCustomDishes } =
     useContext(MenuContext);
-  const { setOrder, currentOrder } = useContext(OrderContext);
+  const { currentOrder, setCurrentOrder } = useContext(OrderContext);
   const { user } = useContext(AuthContext);
-  const {role, email, userName} = user
+  const { role } = user;
 
   const check =
     customDishes.length === menu.length
@@ -81,13 +81,11 @@ export default function DishButtons({
             handleOrder(
               setQuantity,
               currentOrder,
-              setOrder,
+              setCurrentOrder,
               id,
               price,
-              email,
               setOrderState,
               name,
-              userName
             )
           }
           selectVariant={"Default"}

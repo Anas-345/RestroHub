@@ -1,24 +1,21 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext, OrderContext } from "./Contexts";
+import { useState, useEffect } from "react";
+import { OrderContext } from "./Contexts";
 
 export default function OrderContextProvider({ children }) {
+  const [currentOrder, setCurrentOrder] = useState({});
   const [order, setOrder] = useState(() => {
     const orders = JSON.parse(localStorage.getItem("orders"));
     return orders ? orders : [];
   });
-  const { user } = useContext(AuthContext);
-  const { email } = user || {};
-
-  const currentOrder = order.find(
-    (userOrder) => userOrder.userEmail === email && !userOrder.status,
-  );
 
   useEffect(() => {
     localStorage.setItem("orders", JSON.stringify(order));
   }, [order]);
 
   return (
-    <OrderContext.Provider value={{ order, setOrder, currentOrder }}>
+    <OrderContext.Provider
+      value={{ order, setOrder, currentOrder, setCurrentOrder }}
+    >
       {children}
     </OrderContext.Provider>
   );

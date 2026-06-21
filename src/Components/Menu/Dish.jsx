@@ -21,7 +21,7 @@ export default function Dish({
   const [orderState, setOrderState] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
-  const { setOrder, currentOrder } = useContext(OrderContext);
+  const { currentOrder, setCurrentOrder } = useContext(OrderContext);
 
   const isMounted = useRef(false);
 
@@ -32,40 +32,27 @@ export default function Dish({
       isMounted.current = true;
       return;
     }
+
     if (quantity <= 0) {
       setOrderState(false);
       if (currentOrder?.items.length === 1) {
-        setOrder((prev) =>
-          prev.filter(
-            (userOrder) => userOrder.orderId !== currentOrder?.orderId,
-          ),
-        );
+        setCurrentOrder({});
         return;
       }
-      setOrder((prev) =>
-        prev.map((userOrder) =>
-          userOrder.orderId === currentOrder?.orderId
-            ? {
-                ...userOrder,
-                items: userOrder.items.filter((item) => item.id !== id),
-              }
-            : userOrder,
-        ),
-      );
+
+      setCurrentOrder((prev) => ({
+        ...prev,
+        items: prev.items.filter((item) => item.id !== id),
+      }));
       return;
     }
-    setOrder((prev) =>
-      prev.map((userOrder) =>
-        userOrder.orderId === currentOrder?.orderId
-          ? {
-              ...userOrder,
-              items: userOrder.items.map((item) =>
-                item.id === id ? { ...item, quantity } : item,
-              ),
-            }
-          : userOrder,
+
+    setCurrentOrder((prev) => ({
+      ...prev,
+      items: prev.items.map((item) =>
+        item.id === id ? { ...item, quantity } : item,
       ),
-    );
+    }));
   }, [quantity]);
 
   useEffect(() => {

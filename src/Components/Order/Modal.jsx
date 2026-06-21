@@ -1,39 +1,41 @@
-import { OrderContext } from "@/Context/Contexts";
+import { AuthContext, OrderContext } from "@/Context/Contexts";
 import { useContext, useRef, useState } from "react";
 import Buttons from "../shared/Buttons";
 
 export default function Modal({ showForm, setShowForm }) {
-  const [isBottom, setIsBottom] = useState(false)
+  const [isBottom, setIsBottom] = useState(false);
 
-  const scrollRef = useRef()
+  const scrollRef = useRef();
 
-  const { currentOrder, setOrder } = useContext(OrderContext);
+  const { currentOrder, setOrder, setCurrentOrder } = useContext(OrderContext);
+  const { user } = useContext(AuthContext);
 
-  const totalAmount = currentOrder?.items.reduce(
+  const { uid } = user;
+
+  const totalAmount = currentOrder?.items?.reduce(
     (total, item) => item.price * item.quantity + total,
     0,
   );
 
   function handleOrderSubmit() {
-    setOrder((prev) =>
-      prev.map((singleOrder) =>
-        singleOrder.userEmail === currentOrder.userEmail && !singleOrder.status
-          ? {
-              ...singleOrder,
-              status: "Pending",
-              totalPrice: totalAmount,
-              placedAt: new Date().getTime(),
-            }
-          : singleOrder,
-      ),
-    );
+    setOrder((prev) => [
+      ...prev,
+      {
+        ...currentOrder,
+        status: "Pending",
+        totalPrice: totalAmount,
+        placedAt: new Date().getTime(),
+        uid,
+      },
+    ]);
+    setCurrentOrder({});
     setShowForm(false);
   }
 
   function handleScroll() {
-    const el = scrollRef.current
-    if(!el) return
-    setIsBottom(el.scrollHeight - el.scrollTop <= el.clientHeight + 5)
+    const el = scrollRef.current;
+    if (!el) return;
+    setIsBottom(el.scrollHeight - el.scrollTop <= el.clientHeight + 5);
   }
 
   return (
@@ -74,7 +76,7 @@ export default function Modal({ showForm, setShowForm }) {
             </button>
           </div>
 
-          {currentOrder ? (
+          {currentOrder?.items ? (
             <>
               <div
                 ref={scrollRef}

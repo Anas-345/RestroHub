@@ -1,7 +1,7 @@
 import { AuthContext } from "@/Context/Contexts";
 import { useContext } from "react";
 
-export default function EmaptyMenu() {
+export default function EmptyMenu() {
   const { user } = useContext(AuthContext);
 
   const { role } = user;

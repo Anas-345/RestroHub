@@ -1,5 +1,6 @@
 import InputField from "@/Components/shared/InputField";
 import { AuthContext } from "@/Context/Contexts";
+import { idGen } from "@/Functions/DishFunctions";
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -49,6 +50,7 @@ export default function Register() {
     setAuth((prev) => [
       ...prev,
       {
+        uid: idGen(),
         userName: name,
         role,
         email,
