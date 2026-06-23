@@ -1,13 +1,10 @@
 import { AuthContext, OrderContext } from "@/Context/Contexts";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import Buttons from "../shared/Buttons";
-import { handleOrderSubmit, handleScroll } from "@/Functions/OrderFunctions";
+import { handleOrderSubmit } from "@/Functions/OrderFunctions";
 
 export default function Modal({ showForm, setShowForm }) {
-  const [isBottom, setIsBottom] = useState(false);
   const inpRef = useRef();
-
-  const scrollRef = useRef();
 
   const { currentOrder, setOrder, setCurrentOrder } = useContext(OrderContext);
   const { user } = useContext(AuthContext);
@@ -22,7 +19,7 @@ export default function Modal({ showForm, setShowForm }) {
   return (
     <>
       <div
-        className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${showForm ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${showForm ? "opacity-100" : "opacity-0 pointer-events-none"}`} onClick={()=>setShowForm(false)}
       />
 
       <div
@@ -60,20 +57,7 @@ export default function Modal({ showForm, setShowForm }) {
           {currentOrder?.items ? (
             <>
               <div
-                ref={scrollRef}
-                onScroll={() => handleScroll(scrollRef, setIsBottom)}
-                className="overflow-y-auto px-6 flex flex-col"
-                style={{
-                  scrollbarWidth: "none",
-                  maxHeight: "280px",
-                  maskImage: isBottom
-                    ? "none"
-                    : "linear-gradient(to bottom, black 80%, transparent 100%)",
-                  WebkitMaskImage: isBottom
-                    ? "none"
-                    : "linear-gradient(to bottom, black 80%, transparent 100%)",
-                }}
-              >
+                className="overflow-y-auto px-6 flex flex-col custom-scrollbar">
                 {currentOrder.items.map((item) => (
                   <div
                     key={item.id}

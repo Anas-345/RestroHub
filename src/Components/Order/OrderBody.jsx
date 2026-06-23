@@ -1,7 +1,12 @@
+import { useContext, useEffect, useState } from "react";
 import { AuthContext, OrderContext } from "@/Context/Contexts";
-import { useContext } from "react";
+import DetailModal from "./DetailModal";
+import { statusStyle } from "@/Functions/OrderFunctions";
 
 export default function OrderBody() {
+  const [showForm, setShowForm] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState({});
+
   const { order } = useContext(OrderContext);
   const { user, auth } = useContext(AuthContext);
   const { role, uid } = user;
@@ -16,16 +21,17 @@ export default function OrderBody() {
       ? "grid-cols-[1fr_1.2fr_1fr_1fr_0.5fr] md:grid-cols-[1fr_1.2fr_2fr_1fr_1fr_1fr_0.5fr]"
       : "grid-cols-[1fr_1fr_1fr_0.5fr] md:grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr]";
 
-  const statusStyle = {
-    Pending: "bg-[#e8a045]/10 text-[#e8a045] border-[#e8a045]/30",
-    Preparing: "bg-[#5b9bd5]/10 text-[#5b9bd5] border-[#5b9bd5]/30",
-    Ready: "bg-[#4caf82]/10 text-[#4caf82] border-[#4caf82]/30",
-    Delivered: "bg-[#4caf82]/08 text-[#3a9e72] border-[#4caf82]/20",
-    Cancelled: "bg-[#e05555]/10 text-[#e05555] border-[#e05555]/30",
-  };
+  useEffect(() => {
+    if (!showForm) setSelectedOrder({});
+  }, [showForm]);
 
   return (
     <div className="bg-[#1a1814] border border-[#2e2a24] rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
+      <DetailModal
+        showForm={showForm}
+        setShowForm={setShowForm}
+        selectedOrder={selectedOrder}
+      />
       <div
         className={`grid ${gridCols} gap-4 px-6 py-3 bg-[#221f1a] border-b border-[#2e2a24]`}
       >
@@ -118,7 +124,17 @@ export default function OrderBody() {
                 {new Date(userOrder.placedAt).toLocaleTimeString()}
               </p>
 
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#2e2a24] text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5 transition-all duration-200 cursor-pointer">
+              <button
+                className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#2e2a24] text-[#7a7268] hover:text-[#e8a045] hover:border-[#e8a045]/40 hover:bg-[#e8a045]/5 transition-all duration-200 cursor-pointer"
+                onClick={() => {
+                  setShowForm(true);
+                  setSelectedOrder({
+                    ...userOrder,
+                    index: i + 1,
+                    name: currentUserOrder.userName,
+                  });
+                }}
+              >
                 👁
               </button>
             </div>
