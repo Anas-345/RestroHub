@@ -1,9 +1,11 @@
 import { AuthContext, OrderContext } from "@/Context/Contexts";
 import { useContext, useRef, useState } from "react";
 import Buttons from "../shared/Buttons";
+import { handleOrderSubmit, handleScroll } from "@/Functions/OrderFunctions";
 
 export default function Modal({ showForm, setShowForm }) {
   const [isBottom, setIsBottom] = useState(false);
+  const inpRef = useRef();
 
   const scrollRef = useRef();
 
@@ -16,27 +18,6 @@ export default function Modal({ showForm, setShowForm }) {
     (total, item) => item.price * item.quantity + total,
     0,
   );
-
-  function handleOrderSubmit() {
-    setOrder((prev) => [
-      ...prev,
-      {
-        ...currentOrder,
-        status: "Pending",
-        totalPrice: totalAmount,
-        placedAt: new Date().getTime(),
-        uid,
-      },
-    ]);
-    setCurrentOrder({});
-    setShowForm(false);
-  }
-
-  function handleScroll() {
-    const el = scrollRef.current;
-    if (!el) return;
-    setIsBottom(el.scrollHeight - el.scrollTop <= el.clientHeight + 5);
-  }
 
   return (
     <>
@@ -80,7 +61,7 @@ export default function Modal({ showForm, setShowForm }) {
             <>
               <div
                 ref={scrollRef}
-                onScroll={handleScroll}
+                onScroll={() => handleScroll(scrollRef, setIsBottom)}
                 className="overflow-y-auto px-6 flex flex-col"
                 style={{
                   scrollbarWidth: "none",
@@ -134,6 +115,7 @@ export default function Modal({ showForm, setShowForm }) {
                   <select
                     id="type"
                     className="w-full bg-[#1a1814] border border-[#2e2a24] rounded-lg px-4 py-2.5 text-sm text-[#f0ebe3] outline-none focus:border-[#e8a045]/50 focus:bg-[#1e1c18] transition-all duration-200 cursor-pointer"
+                    ref={inpRef}
                   >
                     <option value="dine-in">Dine-in</option>
                     <option value="takeaway">Takeaway</option>
@@ -149,7 +131,17 @@ export default function Modal({ showForm, setShowForm }) {
                   />
                   <Buttons
                     content={"Place Order"}
-                    handleClick={handleOrderSubmit}
+                    handleClick={() =>
+                      handleOrderSubmit(
+                        setOrder,
+                        currentOrder,
+                        setCurrentOrder,
+                        setShowForm,
+                        totalAmount,
+                        uid,
+                        inpRef.current.value
+                      )
+                    }
                     selectVariant={"Default"}
                   />
                 </div>
