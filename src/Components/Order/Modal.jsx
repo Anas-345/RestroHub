@@ -1,7 +1,7 @@
 import { AuthContext, OrderContext } from "@/Context/Contexts";
 import { useContext, useRef } from "react";
 import Buttons from "../shared/Buttons";
-import { handleOrderSubmit } from "@/Functions/OrderFunctions";
+import { handleOrderSubmit } from "@/Functions/Order/OrderFunctions";
 
 export default function Modal({ showForm, setShowForm }) {
   const inpRef = useRef();

@@ -19,6 +19,8 @@ export default function Buttons({
     Counter:
       "bg-[#e8a045]/10 hover:bg-[#e8a045]/20 text-[#e8a045] border-[#e8a045]/30 hover:border-[#e8a045]/60 text-base font-bold flex-none !w-9 !h-9 !py-0 !flex-none",
     Logout: `${dangerBtn} px-4`,
+    Danger:
+      "px-4 text-sm border border-rose-500/20 text-rose-400 bg-rose-500/5 hover:bg-rose-500/10",
   };
 
   const icon = {
@@ -31,7 +33,7 @@ export default function Buttons({
   return (
     <button
       className={`
-        flex items-center justify-center gap-1.5 flex-1 py-2 rounded-lg font-semibold border border-[#2e2a24] transition-all duration-200 active:scale-95 cursor-pointer
+        flex items-center justify-center gap-1.5 flex-1 py-3 rounded-lg font-semibold border border-[#2e2a24] transition-all duration-200 active:scale-95 cursor-pointer
         ${variant[selectVariant]}
       `}
       onClick={handleClick}

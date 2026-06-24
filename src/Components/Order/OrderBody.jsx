@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, OrderContext } from "@/Context/Contexts";
 import DetailModal from "./DetailModal";
-import { statusStyle } from "@/Functions/OrderFunctions";
+import { statusStyle } from "@/data/data";
 
 export default function OrderBody() {
   const [showForm, setShowForm] = useState(false);
